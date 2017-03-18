@@ -29,4 +29,18 @@ class Users extends Model
         
         return $this->validate($validator);
     }
+
+    public static function authenticate(string $login, string $password):Users{
+
+        $result= new Users();
+
+        return $result;
+
+    }
+
+    public function register():bool{
+
+        return false;
+
+    }
 }

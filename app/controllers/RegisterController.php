@@ -19,8 +19,15 @@ class RegisterController extends ControllerBase
     public function indexAction()
     {
         $form = new RegisterForm;
+        $this->view->form = $form;
 
-        if ($this->request->isPost()) {
+        $name='';
+        $username='';
+        $email='';
+        $password='';
+        $repeatPassword='';
+        $isPost= $this->request->isPost();
+        if ($isPost) {
 
             $name = $this->request->getPost('name', array('string', 'striptags'));
             $username = $this->request->getPost('username', 'alphanum');
@@ -28,36 +35,53 @@ class RegisterController extends ControllerBase
             $password = $this->request->getPost('password');
             $repeatPassword = $this->request->getPost('repeatPassword');
 
-            if ($password != $repeatPassword) {
-                $this->flash->error('Passwords are different');
-                return false;
-            }
+        }
 
-            $user = new Users();
+        $isPasswordFail = $password != $repeatPassword;
+        $result = null;
+        if ( $isPasswordFail) {
+            $this->flash->error('Passwords are different');
+            $result = false;
+        }
+
+        $isRegistered = false;
+        $tryRegister = false;
+        $user = new Users();
+        if(!$isPasswordFail && $isPost){
+
+            $tryRegister = true;
+
             $user->username = $username;
             $user->password = sha1($password);
             $user->name = $name;
             $user->email = $email;
             $user->created_at = new Phalcon\Db\RawValue('now()');
             $user->active = 'Y';
-            if ($user->save() == false) {
-                foreach ($user->getMessages() as $message) {
-                    $this->flash->error((string) $message);
-                }
-            } else {
-                $this->tag->setDefault('email', '');
-                $this->tag->setDefault('password', '');
-                $this->flash->success('Thanks for sign-up, please log-in to start generating invoices');
 
-                return $this->dispatcher->forward(
-                    [
-                        "controller" => "session",
-                        "action"     => "index",
-                    ]
-                );
+            $isRegistered = $user->save();
+            $isMongoRegisterd = $user->register();
+        }
+
+        if (!$isRegistered && $tryRegister) {
+            foreach ($user->getMessages() as $message) {
+                $this->flash->error((string) $message);
             }
         }
 
-        $this->view->form = $form;
+        if($isRegistered){
+            $this->tag->setDefault('email', '');
+            $this->tag->setDefault('password', '');
+            $this->flash->success('Thanks for sign-up, please log-in to start generating invoices');
+
+            $result = $this->dispatcher->forward(
+                [
+                    "controller" => "session",
+                    "action"     => "index",
+                ]
+            );
+        }
+
+        return $result;
+
     }
 }
