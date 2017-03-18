@@ -11,3 +11,8 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 .idea/
+composer.lock
+vendor/
+data.txt
+cache/metaData/*.php
+/nbproject/
