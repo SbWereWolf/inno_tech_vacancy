@@ -16,16 +16,12 @@ class Elements extends Component
                 'caption' => 'Home',
                 'action' => 'index'
             ),
-            'invoices' => array(
-                'caption' => 'Invoices',
+            'account' => array(
+                'caption' => 'Accounts',
                 'action' => 'index'
             ),
             'about' => array(
                 'caption' => 'About',
-                'action' => 'index'
-            ),
-            'contact' => array(
-                'caption' => 'Contact',
                 'action' => 'index'
             ),
         ),
@@ -38,31 +34,11 @@ class Elements extends Component
     );
 
     private $_tabs = array(
-        'Invoices' => array(
-            'controller' => 'invoices',
+        'Accounts' => array(
+            'controller' => 'account',
             'action' => 'index',
             'any' => false
         ),
-        'Companies' => array(
-            'controller' => 'companies',
-            'action' => 'index',
-            'any' => true
-        ),
-        'Products' => array(
-            'controller' => 'products',
-            'action' => 'index',
-            'any' => true
-        ),
-        'Product Types' => array(
-            'controller' => 'producttypes',
-            'action' => 'index',
-            'any' => true
-        ),
-        'Your Profile' => array(
-            'controller' => 'invoices',
-            'action' => 'profile',
-            'any' => false
-        )
     );
 
     /**

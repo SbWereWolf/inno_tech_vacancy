@@ -28,6 +28,10 @@ class SessionController extends ControllerBase
      */
     private function _registerSession(Users $user)
     {
+        $this->session->destroy(true);
+
+        $this->session->start();
+
         $this->session->set('auth', array(
             'id' => $user->id,
             'name' => $user->name
@@ -55,8 +59,8 @@ class SessionController extends ControllerBase
 
                 return $this->dispatcher->forward(
                     [
-                        "controller" => "invoices",
-                        "action"     => "index",
+                        "controller" => "account",
+                        "action" => "index",
                     ]
                 );
             }
@@ -67,7 +71,7 @@ class SessionController extends ControllerBase
         return $this->dispatcher->forward(
             [
                 "controller" => "session",
-                "action"     => "index",
+                "action" => "index",
             ]
         );
     }
@@ -79,13 +83,17 @@ class SessionController extends ControllerBase
      */
     public function endAction()
     {
+        $this->session->destroy(true);
+
         $this->session->remove('auth');
         $this->flash->success('Goodbye!');
 
+        $this->session->start();
+
         return $this->dispatcher->forward(
             [
-                "controller" => "index",
-                "action"     => "index",
+                "controller" => "session",
+                "action" => "index",
             ]
         );
     }
