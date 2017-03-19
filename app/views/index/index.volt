@@ -1,24 +1,55 @@
-
 {{ content() }}
 
 <div class="jumbotron">
-    <h1>Welcome to INVO</h1>
-    <p>INVO is a revolutionary application to create invoices online for free.
-    Receive online payments from your clients and improve your cash flow</p>
-    <p>{{ link_to('register', 'Try it for Free &raquo;', 'class': 'btn btn-primary btn-large btn-success') }}</p>
+    <h1>Inno Tech Account Viewer</h1>
+    <p>
+        Приложение разработано по заказу Inno Tech в качестве тестового задания по вакансии "Программист".
+        Для использования приложения пожалуйста пройдите процедуру регистрации.
+    </p>
+    <p>{{ link_to('register', 'Регистрация &raquo;', 'class': 'btn btn-primary btn-large btn-success') }}</p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Manage Invoices Online</h2>
-        <p>Create, track and export your invoices online. Automate recurring invoices and design your own invoice using our invoice template and brand it with your business logo. </p>
+        <h2>Постановка задачи</h2>
+        <p>Необходимо разработать веб-приложение, позволяющее:
+            <ul>
+            <li>
+                войти в систему
+            </li>
+            <li>
+                просмотреть список зарегистрированных пользователей (доступен
+                только после аутентификации)
+            </li>
+            <li>
+                выйти из системы
+            </li>
+        </ul>
+            </p>
+        <p>
+            Следует использовать PHP7 и Phalcon, базу данных MongoDB.
+            Результат выложить на гитхаб.
+        </p>
     </div>
-    <div class="col-md-4">
-        <h2>Dashboards And Reports</h2>
-        <p>Gain critical insights into how your business is doing. See what sells most, who are your top paying customers and the average time your customers take to pay.</p>
+    <div class="col-md-5">
+        <h2>Пример использования</h2>
+        <p>
+        <ol>
+            <li>Открыть страницу приложения http://&lt;имя сервера&gt;/inno_tech_vacancy/index/index ;</li>
+            <li>Нажать кнопку 'Регистрация &raquo;';</li>
+            <li>Заполнить поля;</li>
+            <li>Нажать кнопку 'Register';</li>
+            <li>Приложение откроет форму аутентификации;</li>
+            <li>Заполнить поля формы соответствующими значениями;</li>
+            <li>Нажать кнопку 'Login';</li>
+            <li>Приложение откроет страницу просмотра учётных записей;</li>
+            <li>Используя кнопки 'First' 'Previous' 'Next' 'Last' можно просматривать отдельные страницы списка;</li>
+            <li>Цель просмотра списка пользователей достигнута.</li>
+        </ol>
+        </p>
     </div>
-    <div class="col-md-4">
-        <h2>Invite, Share And Collaborate</h2>
-        <p>Invite users and share your workload as invoice supports multiple users with different permissions. It helps your business to be more productive and efficient. </p>
+    <div class="col-md-3">
+        <h2>Сообщите своё мнение !</h2>
+        <p>Я буду рад услышать ваш отзыв, напишите мне на <a href="mailto:ulfnew@mail.ru">ulfnew@mail.ru</a></p>
     </div>
 </div>
