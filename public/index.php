@@ -18,6 +18,8 @@ try {
      */
     require APP_PATH . 'app/config/loader.php';
 
+    require_once APP_PATH . 'vendor/autoload.php';
+
     $application = new Application(new Services($config));
 
     // NGINX - PHP-FPM already set PATH_INFO variable to handle route

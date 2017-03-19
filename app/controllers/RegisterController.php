@@ -21,12 +21,12 @@ class RegisterController extends ControllerBase
         $form = new RegisterForm;
         $this->view->form = $form;
 
-        $name='';
-        $username='';
-        $email='';
-        $password='';
-        $repeatPassword='';
-        $isPost= $this->request->isPost();
+        $name = '';
+        $username = '';
+        $email = '';
+        $password = '';
+        $repeatPassword = '';
+        $isPost = $this->request->isPost();
         if ($isPost) {
 
             $name = $this->request->getPost('name', array('string', 'striptags'));
@@ -39,7 +39,7 @@ class RegisterController extends ControllerBase
 
         $isPasswordFail = $password != $repeatPassword;
         $result = null;
-        if ( $isPasswordFail) {
+        if ($isPasswordFail) {
             $this->flash->error('Passwords are different');
             $result = false;
         }
@@ -47,7 +47,7 @@ class RegisterController extends ControllerBase
         $isRegistered = false;
         $tryRegister = false;
         $user = new Users();
-        if(!$isPasswordFail && $isPost){
+        if (!$isPasswordFail && $isPost) {
 
             $tryRegister = true;
 
@@ -59,16 +59,26 @@ class RegisterController extends ControllerBase
             $user->active = 'Y';
 
             $isRegistered = $user->save();
-            $isMongoRegisterd = $user->register();
+
+            $account = new Account();
+
+            $account->username = $username;
+            $account->password = password_hash($password, PASSWORD_BCRYPT);
+            $account->name = $name;
+            $account->email = $email;
+            $account->created_at = date('Y-m-d h:i:s');
+            $account->active = 'Y';
+
+            $isMongoRegisterd = $account->register();
         }
 
         if (!$isRegistered && $tryRegister) {
             foreach ($user->getMessages() as $message) {
-                $this->flash->error((string) $message);
+                $this->flash->error((string)$message);
             }
         }
 
-        if($isRegistered){
+        if ($isRegistered) {
             $this->tag->setDefault('email', '');
             $this->tag->setDefault('password', '');
             $this->flash->success('Thanks for sign-up, please log-in to start generating invoices');
@@ -76,7 +86,7 @@ class RegisterController extends ControllerBase
             $result = $this->dispatcher->forward(
                 [
                     "controller" => "session",
-                    "action"     => "index",
+                    "action" => "index",
                 ]
             );
         }

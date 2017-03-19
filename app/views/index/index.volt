@@ -1,12 +1,12 @@
 {{ content() }}
 
 <div class="jumbotron">
-    <h1>Welcome to Inno Tech Account Viewer</h1>
+    <h1>Inno Tech Account Viewer</h1>
     <p>
         Приложение разработано по заказу Inno Tech в качестве тестового задания по вакансии "Программист".
-        Для использования приложения пожалуйста пройджите процедуру регистрации.
+        Для использования приложения пожалуйста пройдите процедуру регистрации.
     </p>
-    <p>{{ link_to('register', 'Try it for Free &raquo;', 'class': 'btn btn-primary btn-large btn-success') }}</p>
+    <p>{{ link_to('register', 'Регистрация &raquo;', 'class': 'btn btn-primary btn-large btn-success') }}</p>
 </div>
 
 <div class="row">
@@ -31,16 +31,16 @@
             Результат выложить на гитхаб.
         </p>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
         <h2>Пример использования</h2>
         <p>
         <ol>
             <li>Открыть страницу приложения http://&lt;имя сервера&gt;/inno_tech_vacancy/index/index ;</li>
-            <li>Нажать кнопку 'Try it for Free &raquo;';</li>
+            <li>Нажать кнопку 'Регистрация &raquo;';</li>
             <li>Заполнить поля;</li>
             <li>Нажать кнопку 'Register';</li>
             <li>Приложение откроет форму аутентификации;</li>
-            <li>заполнить поля формы соответствующими значениями;</li>
+            <li>Заполнить поля формы соответствующими значениями;</li>
             <li>Нажать кнопку 'Login';</li>
             <li>Приложение откроет страницу просмотра учётных записей;</li>
             <li>Используя кнопки 'First' 'Previous' 'Next' 'Last' можно просматривать отдельные страницы списка;</li>
@@ -48,8 +48,8 @@
         </ol>
         </p>
     </div>
-    <div class="col-md-2">
-        <h2>Сообщите свой мнение !</h2>
+    <div class="col-md-3">
+        <h2>Сообщите своё мнение !</h2>
         <p>Я буду рад услышать ваш отзыв, напишите мне на <a href="mailto:ulfnew@mail.ru">ulfnew@mail.ru</a></p>
     </div>
 </div>

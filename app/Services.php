@@ -1,9 +1,8 @@
 <?php
 
-use Phalcon\Mvc\View;
-use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\Url as UrlProvider;
+use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaData;
 use Phalcon\Session\Adapter\Files as SessionAdapter;

@@ -49,7 +49,7 @@ class SessionController extends ControllerBase
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
 
-            $user =  Users::authenticate($email,$password);
+            $account = Account::authenticate($email, $password);
             $user = Users::findFirst(array(
                 "(email = :email: OR username = :email:) AND password = :password: AND active = 'Y'",
                 'bind' => array('email' => $email, 'password' => sha1($password))
