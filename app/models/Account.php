@@ -2,6 +2,8 @@
 
 class Account
 {
+    const OID = 'oid';
+
     const DATABASE_NAME = 'innoTech';
     const COLLECTION_NAME = 'account';
     const USERNAME = 'username';
@@ -41,39 +43,8 @@ class Account
             self::ID,
         );
 
-        $account = $collection->findOne($criteria, $fields);
-
-
-        $isSuccess = !empty($account);
-        $candidate = new Account();
-        if ($isSuccess) {
-
-            foreach ($account as $key => $element) {
-                switch ($key) {
-                    case self::USERNAME:
-                        $candidate->username = $element;
-                        break;
-                    case self::PASSWORD:
-                        $candidate->password = $element;
-                        break;
-                    case self::NAME:
-                        $candidate->name = $element;
-                        break;
-                    case self::EMAIL:
-                        $candidate->email = $element;
-                        break;
-                    case self::CREATED_AT:
-                        $candidate->created_at = $element;
-                        break;
-                    case self::ACTIVE:
-                        $candidate->active = $element;
-                        break;
-                    case self::ID:
-                        $candidate->id = $element;
-                        break;
-                }
-            }
-        }
+        $record = $collection->findOne($criteria, $fields);
+        $candidate = self::RecordToAccount($record);
 
         $isSuccess = password_verify($password, $candidate->password);
         $result = new Account();
@@ -83,6 +54,88 @@ class Account
 
         return $result;
 
+    }
+
+    /**
+     * @param $candidate
+     * @return Account
+     */
+    public static function RecordToAccount($candidate):Account
+    {
+        $isSuccess = !empty($candidate);
+        $account = new Account();
+        if ($isSuccess) {
+
+            foreach ($candidate as $key => $element) {
+                switch ($key) {
+                    case self::USERNAME:
+                        $account->username = $element;
+                        break;
+                    case self::PASSWORD:
+                        $account->password = $element;
+                        break;
+                    case self::NAME:
+                        $account->name = $element;
+                        break;
+                    case self::EMAIL:
+                        $account->email = $element;
+                        break;
+                    case self::CREATED_AT:
+                        $account->created_at = $element;
+                        break;
+                    case self::ACTIVE:
+                        $account->active = $element;
+                        break;
+                    case self::ID:
+                        $idObject = $element;
+                        $account->id = $idObject;
+
+                        $isObject = is_object($idObject);
+                        if ($isObject) {
+                            foreach ($idObject as $index => $objectElement) {
+                                if ($index == self::OID) {
+                                    $account->id = $objectElement;
+                                }
+                            }
+                        }
+
+                        break;
+                }
+            }
+        }
+        return $account;
+    }
+
+    public static function RecordToArray($account):array
+    {
+        $isSuccess = !empty($account);
+        $fields = array();
+        if ($isSuccess) {
+
+            foreach ($account as $key => $element) {
+
+                if ($key == self::ID) {
+
+                    $idObject = $element;
+                    $fields[self::ID] = $idObject;
+
+                    $isObject = is_object($idObject);
+                    if ($isObject) {
+                        foreach ($idObject as $index => $objectElement) {
+                            if ($index == self::OID) {
+                                $fields[self::ID] = $objectElement;
+                            }
+                        }
+                    }
+
+                }
+                if ($key != self::ID) {
+                    $fields[$key] = $element;
+                }
+
+            }
+        }
+        return $fields;
     }
 
     public function register():bool
@@ -114,8 +167,6 @@ class Account
         $isSuccess = !empty($this->id);
 
         return $isSuccess;
-
-
     }
 
     /** Get object for interact collection
@@ -151,4 +202,13 @@ class Account
         }
         return $value;
     }
+
+    public static function findAll()
+    {
+        $collection = Account::getCollection(self::DATABASE_NAME, self::COLLECTION_NAME);
+        $records = $collection->find();
+
+        return $records;
+    }
 }
+

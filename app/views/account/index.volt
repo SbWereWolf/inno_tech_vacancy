@@ -1,27 +1,27 @@
 {{ content() }}
 
 {% for account in page.items %}
-{% if loop.first %}
-<table class="table table-bordered table-striped" align="center">
-    <thead>
+    {% if loop.first %}
+        <table class="table table-bordered table-striped" align="center">
+        <thead>
         <tr>
             <th>Account name</th>
             <th>Person name</th>
             <th>E-mail</th>
             <th>Date created</th>
         </tr>
-    </thead>
-{% endif %}
+        </thead>
+    {% endif %}
     <tbody>
-        <tr>
-            <td>{{ account.username }}</td>
-            <td>{{ account.name }}</td>
-            <td>{{ account.email }}</td>
-            <td>{{ account.created_at }}</td>
-        </tr>
+    <tr>
+        <td>{{ account['username'] }}</td>
+        <td>{{ account['name'] }}</td>
+        <td>{{ account['email'] }}</td>
+        <td>{{ account['created_at'] }}</td>
+    </tr>
     </tbody>
-{% if loop.last %}
-    <tbody>
+    {% if loop.last %}
+        <tbody>
         <tr>
             <td colspan="7" align="right">
                 <div class="btn-group">
@@ -33,9 +33,9 @@
                 </div>
             </td>
         </tr>
-    <tbody>
-</table>
-{% endif %}
+        <tbody>
+        </table>
+    {% endif %}
 {% else %}
     No accounts are recorded
 {% endfor %}

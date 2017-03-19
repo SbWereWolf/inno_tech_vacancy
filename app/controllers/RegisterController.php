@@ -46,19 +46,9 @@ class RegisterController extends ControllerBase
 
         $isRegistered = false;
         $tryRegister = false;
-        $user = new Users();
         if (!$isPasswordFail && $isPost) {
 
             $tryRegister = true;
-
-            $user->username = $username;
-            $user->password = sha1($password);
-            $user->name = $name;
-            $user->email = $email;
-            $user->created_at = new Phalcon\Db\RawValue('now()');
-            $user->active = 'Y';
-
-            $isRegistered = $user->save();
 
             $account = new Account();
 
@@ -69,19 +59,17 @@ class RegisterController extends ControllerBase
             $account->created_at = date('Y-m-d h:i:s');
             $account->active = 'Y';
 
-            $isMongoRegisterd = $account->register();
+            $isRegistered = $account->register();
         }
 
         if (!$isRegistered && $tryRegister) {
-            foreach ($user->getMessages() as $message) {
-                $this->flash->error((string)$message);
-            }
+            $this->flash->error('Ошибка регистрации');
         }
 
         if ($isRegistered) {
             $this->tag->setDefault('email', '');
             $this->tag->setDefault('password', '');
-            $this->flash->success('Thanks for sign-up, please log-in to start generating invoices');
+            $this->flash->success('Thanks for sign-up, please log-in to view registered accounts');
 
             $result = $this->dispatcher->forward(
                 [

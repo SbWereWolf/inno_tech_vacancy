@@ -13,9 +13,6 @@ $loader->registerNamespaces(
     ]
 )->register();
 
-$loader->registerFiles([APP_PATH . 'vendor/mongodb/mongodb/src/functions.php'])
-    ->register();
-
 /**
  * We're a registering a set of directories taken from the configuration file
  */

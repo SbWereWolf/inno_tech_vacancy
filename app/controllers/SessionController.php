@@ -24,17 +24,17 @@ class SessionController extends ControllerBase
     /**
      * Register an authenticated user into session data
      *
-     * @param Users $user
+     * @param Users $account
      */
-    private function _registerSession(Users $user)
+    private function _registerSession(Account $account)
     {
         $this->session->destroy(true);
 
         $this->session->start();
 
         $this->session->set('auth', array(
-            'id' => $user->id,
-            'name' => $user->name
+            'id' => $account->id,
+            'name' => $account->name
         ));
     }
 
@@ -44,37 +44,42 @@ class SessionController extends ControllerBase
      */
     public function startAction()
     {
-        if ($this->request->isPost()) {
+
+        $isPost = $this->request->isPost();
+        $email = '';
+        $password = '';
+        if ($isPost) {
 
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
-
-            $account = Account::authenticate($email, $password);
-            $user = Users::findFirst(array(
-                "(email = :email: OR username = :email:) AND password = :password: AND active = 'Y'",
-                'bind' => array('email' => $email, 'password' => sha1($password))
-            ));
-            if ($user != false) {
-                $this->_registerSession($user);
-                $this->flash->success('Welcome ' . $user->name);
-
-                return $this->dispatcher->forward(
-                    [
-                        "controller" => "account",
-                        "action" => "index",
-                    ]
-                );
-            }
-
-            $this->flash->error('Wrong email/password');
         }
 
-        return $this->dispatcher->forward(
-            [
-                "controller" => "session",
-                "action" => "index",
-            ]
-        );
+        $result = null;
+        $account = Account::authenticate($email, $password);
+        $isSuccess = !empty($account->id);
+        if ($isSuccess) {
+            $this->_registerSession($account);
+            $this->flash->success('Welcome ' . $account->name);
+
+            $result = $this->dispatcher->forward(
+                [
+                    "controller" => "account",
+                    "action" => "index",
+                ]
+            );
+        }
+
+        if (!$isSuccess) {
+            $this->flash->error('Wrong email/password');
+            $result = $this->dispatcher->forward(
+                [
+                    "controller" => "session",
+                    "action" => "index",
+                ]
+            );
+        }
+
+        return $result;
     }
 
     /**
