@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phalcon/devtools": "dev-master",
+        "mongodb/mongodb": "^1.1"
+    }
+}

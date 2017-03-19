@@ -1,0 +1,17 @@
+cache/volt/*.php
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+.project
+.settings
+.buildpath
+*.komodoproject
+*.sublime-project
+*.sublime-workspace
+.idea/
+composer.lock
+vendor/
+data.txt
+cache/metaData/*.php
+/nbproject/
